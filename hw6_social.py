@@ -97,6 +97,7 @@ def findHashtags(message):
                 break 
         string="#"+string 
         lst.append(string) 
+    # print(len(lst))
     return lst
 
 
@@ -146,6 +147,7 @@ def addColumns(data, stateDf):
     data["state"]=states
     data["region"]=regions
     data["hashtags"]=hashtags
+    # print(len(hashtags))
     return None
 
 
@@ -239,7 +241,16 @@ Parameters: dataframe
 Returns: dict mapping strs to ints
 '''
 def getHashtagRates(data):
-    return
+    dict_={}
+    for i in data["hashtags"]:
+        for j in i:
+            if len(j)!=0 and j not in dict_:
+                dict_[j]=1
+            else:
+                dict_[j]+=1
+    return dict_
+
+
 
 
 '''
@@ -369,7 +380,7 @@ if __name__ == "__main__":
     # test.testParseName()
     # test.testParsePosition()
     # test.testParseState()
-    # test.testFindHashtags()
+    #test.testFindHashtags()
     # test.testGetRegionFromState()
     # test.testAddColumns()
     # test.testAddSentimentColumn()
@@ -378,7 +389,8 @@ if __name__ == "__main__":
     addColumns(df, stateDf)  
     addSentimentColumn(df)
     #test.testGetDataCountByState(df)
-    test.testGetDataForRegion(df)
+    # test.testGetDataForRegion(df)
+    test.testGetHashtagRates(df)
 
     ## Uncomment these for Week 2 ##
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
