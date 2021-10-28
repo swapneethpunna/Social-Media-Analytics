@@ -86,7 +86,19 @@ Parameters: str
 Returns: list of strs
 '''
 def findHashtags(message):
-    return re.findall("#\w+", message)
+    lst=[] 
+    m=message.split("#") 
+    for x in m[1:len(m)]: 
+        string=""
+        for y in x: 
+            if y not in endChars: 
+                string+=y  
+            else: 
+                break 
+        string="#"+string 
+        lst.append(string) 
+    return lst
+
 
 
 '''
@@ -97,6 +109,7 @@ Returns: str
 '''
 def getRegionFromState(stateDf, state):
     row= stateDf.loc[stateDf['state'] == state, 'region']
+    #print(row)
     # print(stateDf)
     # print(row.values[0])
     return row.values[0]
@@ -168,6 +181,12 @@ Returns: None
 '''
 def addSentimentColumn(data):
     classifier = SentimentIntensityAnalyzer()
+    sentiments=[]
+    for index, row in data.iterrows():
+        message=data["text"].loc[index] 
+        text=findSentiment(classifier, message) 
+        sentiments.append(text) 
+    data["sentiment"]=sentiments
     return
 
 
@@ -178,7 +197,19 @@ Parameters: dataframe ; str ; str
 Returns: dict mapping strs to ints
 '''
 def getDataCountByState(data, colName, dataToCount):
-    return
+    count={} 
+    if len(colName) !=0 and len(dataToCount) !=0 :
+        for index, row in data.iterrows(): 
+            if (row[colName] == dataToCount) : 
+                if (row["state"] not in count) : 
+                    count[row["state"]] = 0
+                count[row["state"]] +=1
+    elif colName=="" and dataToCount=="":
+        for index, row in data.iterrows(): 
+            if (row["state"] not in count) : 
+                count[row["state"]] = 0
+            count[row["state"]] +=1
+    return count
 
 
 '''
@@ -330,8 +361,13 @@ if __name__ == "__main__":
     # test.testParseState()
     # test.testFindHashtags()
     # test.testGetRegionFromState()
-    #test.testAddColumns()
-    test.testFindSentiment()
+    # test.testAddColumns()
+    # test.testAddSentimentColumn()
+    df = makeDataFrame("data/politicaldata.csv") 
+    stateDf = makeDataFrame("data/statemappings.csv") 
+    addColumns(df, stateDf)  
+    addSentimentColumn(df)
+    test.testGetDataCountByState(df)
 
     ## Uncomment these for Week 2 ##
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
