@@ -13,7 +13,7 @@ project = "Social" # don't edit this
 
 import pandas as pd
 import nltk
-import re
+from typing import Counter 
 nltk.download('vader_lexicon', quiet=True)
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt; plt.rcdefaults()
@@ -320,6 +320,12 @@ Parameters: dict mapping strs to ints ; dict mapping strs to ints ; int ; str
 Returns: None
 '''
 def graphTopNStates(stateCounts, stateFeatureCounts, n, title):
+    featurerate={}
+    topstates={}
+    for i in stateFeatureCounts:
+        featurerate[i]=(stateFeatureCounts[i]/stateCounts[i])
+    topstates=dict(Counter(featurerate).most_common(n))
+    graphStateCounts(topstates,"Top n Featured")
     return
 
 
@@ -420,6 +426,7 @@ if __name__ == "__main__":
     # test.testGetHashtagRates(df)
     #test.testMostCommonHashtags(df)
     #test.testGetHashtagSentiment(df)
+
     
 
     ## Uncomment these for Week 2 ##
