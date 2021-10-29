@@ -336,6 +336,19 @@ Parameters: dict mapping strs to (dicts mapping strs to ints) ; str
 Returns: None
 '''
 def graphRegionComparison(regionDicts, title):
+    featurelist=[]
+    regionlist=[]
+    regionvalue=[]
+    for i in regionDicts:
+        temporarylist=[]
+        x=regionDicts[i]
+        for j in x:
+            if j not in featurelist:
+                featurelist.append(j)
+            temporarylist.append(x[j])
+        regionvalue.append(temporarylist)
+        regionlist.append(i)
+    sideBySideBarPlots(featurelist, regionlist, regionvalue, title)
     return
 
 
@@ -417,10 +430,10 @@ if __name__ == "__main__":
     # test.testGetRegionFromState()
     # test.testAddColumns()
     # test.testAddSentimentColumn()
-    df = makeDataFrame("data/politicaldata.csv") 
-    stateDf = makeDataFrame("data/statemappings.csv") 
-    addColumns(df, stateDf)  
-    addSentimentColumn(df)
+    # df = makeDataFrame("data/politicaldata.csv") 
+    # stateDf = makeDataFrame("data/statemappings.csv") 
+    # addColumns(df, stateDf)  
+    # addSentimentColumn(df)
     #test.testGetDataCountByState(df)
     # test.testGetDataForRegion(df)
     # test.testGetHashtagRates(df)
