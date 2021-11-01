@@ -85,7 +85,18 @@ Parameters: str
 Returns: list of strs
 '''
 def findHashtags(message):
-    return
+    lst=[] 
+    m=message.split("#") 
+    for x in m[1:len(m)]: 
+        string=""
+        for y in x: 
+            if y not in endChars: 
+                string+=y  
+            else: 
+                break 
+        string="#"+string 
+        lst.append(string) 
+    return lst
 
 
 '''
@@ -289,6 +300,7 @@ if __name__ == "__main__":
     test.testParseName()
     test.testParsePosition()
     test.testParseState()
+    test.testFindHashtags()
 
     ## Uncomment these for Week 2 ##
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
