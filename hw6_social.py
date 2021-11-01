@@ -13,7 +13,6 @@ project = "Social" # don't edit this
 
 import pandas as pd
 import nltk
-from typing import Counter 
 nltk.download('vader_lexicon', quiet=True)
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt; plt.rcdefaults()
@@ -97,9 +96,7 @@ def findHashtags(message):
                 break 
         string="#"+string 
         lst.append(string) 
-    # print(len(lst))
     return lst
-
 
 
 '''
