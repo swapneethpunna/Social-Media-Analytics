@@ -304,7 +304,7 @@ def graphStateCounts(stateCounts, title):
     for index in range(len(x)):
         plt.bar(x[index],y[index],width=w)
     plt.xticks(ticks=list(range(len(x))),label=x,rotation="vertical")
-    plt.title("StateCount")
+    plt.title(title)
     plt.xlabel("State")
     plt.ylabel("Count")
  
@@ -325,7 +325,7 @@ def graphTopNStates(stateCounts, stateFeatureCounts, n, title):
     for i in stateFeatureCounts:
         featurerate[i]=(stateFeatureCounts[i]/stateCounts[i])
     topstates=dict(Counter(featurerate).most_common(n))
-    graphStateCounts(topstates,"Top n Featured")
+    graphStateCounts(topstates,title)
     return
 
 
